@@ -16,10 +16,10 @@ const nuevosValores2 = valores.map((x) => {
 })
 console.log(nuevosValores2)
 
-// Recordemos que en las arrow, la "flecha" separa precisamente los parámetros (derecha)
-// del bloque a ejecutar (izquierda)
-// Cuando la función recibe un único parámetro, podemos prescindir de los paréntesis (derecha),
-// y si procesa una única instrucción, también podemos prescindir de las llaves para enmarcar
+// Recordemos que en las arrow, la "flecha" separa precisamente los parámetros (izquierda)
+// del bloque a ejecutar (derecha)
+// Cuando la función recibe un único parámetro, podemos prescindir de los paréntesis (izquierda),
+// y si procesa una única instrucción, también podemos prescindir de las llaves (derecha) para enmarcar
 // el bloque, aprovechando el return implícito de las arrow
 const nuevosValores3 = valores.map(x => x + 1)
 console.log(nuevosValores3)
