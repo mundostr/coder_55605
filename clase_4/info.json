@@ -1,0 +1,17 @@
+{
+  "strContent": "{\n  \"name\": \"coder_temporal\",\n  \"version\": \"1.0.0\",\n  \"description\": \"\",\n  \"main\": \"actividad.js\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\"\n  },\n  \"keywords\": [],\n  \"author\": \"\",\n  \"license\": \"ISC\"\n}\n",
+  "objContent": {
+    "name": "coder_temporal",
+    "version": "1.0.0",
+    "description": "",
+    "main": "actividad.js",
+    "type": "module",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+  },
+  "size": 252
+}
