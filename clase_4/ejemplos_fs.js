@@ -27,7 +27,10 @@ console.log(content2)
 // Esta es una sintaxis alternativa utilizando callbacks. Recordar EVITAR
 // un anidamiento muy pronunciado de los callbacks, utilizar solo 2 o 3 niveles
 fs.appendFile(DESTINATION_FILE, `${currentDateTimeIso}\n`, (error) => {
-    if (error) console.log('No se pudo escribir el archivo: ', error.message)
+    if (error) {
+        console.log('No se pudo escribir el archivo: ', error.message)
+        return
+    }
     
     fs.readFile(DESTINATION_FILE, { encoding: 'utf-8'}, (error, result) => {
         if (error) console.log('No se pudo leer el archivo: ', error.message)
