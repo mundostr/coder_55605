@@ -33,7 +33,11 @@ fs.appendFile(DESTINATION_FILE, `${currentDateTimeIso}\n`, (error) => {
     }
     
     fs.readFile(DESTINATION_FILE, { encoding: 'utf-8'}, (error, result) => {
-        if (error) console.log('No se pudo leer el archivo: ', error.message)
+        if (error) {
+            console.log('No se pudo leer el archivo: ', error.message)
+            return
+        }
+        
         console.log(result)
     })
 })
