@@ -1,0 +1,19 @@
+<div>
+    <h1>SISTEMA ACTIVO - usuario {{user.lastName}}, {{user.firstName}} ({{user.age}})</h1>
+
+    <!--
+        Utilizando la doble llave {{}}, podemos encerrar variables que luego el motor
+        de Handlebars reemplazará por los valores enviados en el objeto al servir la plantilla
+        con res.render en el endpoint.
+
+        También podemos utilizar condiciones y ciclos, aunque con la limitación de solo
+        evaluar verdadero o falso en las condiciones, NO expresiones
+    -->
+    {{#if isAdmin}}
+        <ul>
+        {{#each foods}}
+            <li>{{this.name}} ({{this.price}})</li>
+        {{/each}}
+        </ul>
+    {{/if}}
+</div>
