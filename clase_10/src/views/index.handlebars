@@ -1,0 +1,11 @@
+<div>
+    <h1>SISTEMA ACTIVO - usuario {{user.lastName}}, {{user.firstName}}</h1>
+
+    {{#if isAdmin}}
+        <ul>
+        {{#each food}}
+            <li>{{this.name}} ({{this.price}})</li>
+        {{/each}}
+        </ul>
+    {{/if}}
+</div>
