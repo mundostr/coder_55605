@@ -1,0 +1,44 @@
+<div>
+    <h1>SISTEMA ACTIVO - Chat</h1>
+    <!-- Campo de formulario con id message -->
+    <input type="text" name="message" id="message" placeholder="Mensaje" style="width: 260px;">
+    <!-- Al hacer click en el botón, llamamos a la función sendMessage() -->
+    <button onClick="sendMessage()">Enviar</button>
+    <p id="received_messages"></p>
+</div>
+
+<!--
+    CLIENTE de Socket.IO
+    ATENCION!: la url que estamos utilizando debajo solo es válida con la instalación de socket.io vía npm,
+    pero por supuesto puede utilizarse un cliente por CDN, ejemplo:
+    
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+-->
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    // Creamos un nuevo CLIENTE websockets, y generamos un par de constantes para poder manejar
+    // el campo de formulario y el párrafo.
+    const socketClient = io()
+    const message = document.getElementById('message')
+    const received_messages = document.getElementById('received_messages')
+
+    // "Escuchamos" por mensajes bajo el tópico "confirmation"
+    socketClient.on('confirmation', data => {
+        console.log(data)
+        console.log('Confirmación recibida')
+    })
+
+    // "Escuchamos" por mensajes bajo el tópico "message_added"
+    socketClient.on('message_added', data => {
+        received_messages.innerHTML += `${data}<br />`
+    })
+
+    const sendMessage = () => {
+        // socketClient.emit('message', { content: 'Este es un mensaje desde el cliente' })
+        
+        // Emitimos un mensaje bajo el tópico "new_message"
+        if (message.value !== '') {
+            socketClient.emit('new_message', message.value)
+        }
+    }
+</script>
