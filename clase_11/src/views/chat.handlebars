@@ -1,0 +1,15 @@
+<div>
+    <h1>CODER - Chat</h1>
+    <!-- Generamos un campo de texto con id message para cargar texto de nuevos mensajes -->
+    <input type="text" name="message" id="message" placeholder="Mensaje" style="width: 260px;">
+    <!-- Al hacer click en este botón, llamamos a la función sendMessage() -->
+    <button onClick="sendMessage()">Enviar</button>
+    <!-- Este párrafo contendrá el listado de mensajes que hay en el chat hasta el momento -->
+    <p id="received_messages"></p>
+</div>
+
+<!-- Agregamos sweetalert para tener ventanas emergentes visualmente más atractivas -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11.9.0/dist/sweetalert2.all.min.js"></script>
+<script src="/socket.io/socket.io.js"></script> {{!-- <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script> --}}
+<!-- Colocamos el código del cliente de socket.io en un archivo separado, para más orden -->
+<script src="/static/js/chat.js"></script>
