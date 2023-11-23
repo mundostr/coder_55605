@@ -1,0 +1,18 @@
+[
+    {
+        "firstName": "Carlos",
+        "lastName": "Perren",
+        "age": 30,
+        "dni": "11.222.333",
+        "course": "Programming",
+        "qualification": 8
+    },
+    {
+        "firstName": "Carolina",
+        "lastName": "Ferrero",
+        "age": 29,
+        "dni": "11.222.444",
+        "course": "Programming",
+        "qualification": 9
+    }
+]
