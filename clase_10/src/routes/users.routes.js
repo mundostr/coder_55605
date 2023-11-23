@@ -31,6 +31,12 @@ router.get('/', report, (req, res) => {
 
 router.post('/', (req, res) => {
     // Deberíamos controlar lo que llega en el req.body
+
+    // Si queremos utilizar socket.io en este endpoint, nos
+    // traemos la referencia de socketServer generada en la app
+    const socketServer = req.app.get('socketServer')
+    socketServer.emit('new_product', 'Quiere cargar un nuevo producto')
+
     const newContent = req.body
     users.push(newContent)
     res.status(200).send({ data: newContent })
