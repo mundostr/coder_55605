@@ -17,7 +17,13 @@ const httpServer = app.listen(PORT, () => {
 })
 
 // Creamos un nuevo servidor de Websockets
-const socketServer = new Server(httpServer)
+const socketServer = new Server(httpServer, {
+    cors: {
+        origin: "*",
+        methods: ["PUT", "GET", "POST", "DELETE", "OPTIONS"],
+        credentials: false
+    } 
+})
 // Ponemos a "escuchar" el servidor para eventos de conexión
 socketServer.on('connection', socket => {
     console.log(socket.id)
@@ -48,6 +54,7 @@ app.use(express.urlencoded({ extended: true }))
 app.engine('handlebars', handlebars.engine())
 app.set('views', `${__dirname}/views`)
 app.set('view engine', 'handlebars')
+app.set('socketServer', socketServer)
 
 app.use('/', viewsRouter)
 app.use('/api/users', usersRouter)
