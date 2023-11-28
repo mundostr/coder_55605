@@ -35,6 +35,11 @@ router.post('/', uploader.single('thumbnail'), async (req, res) => {
         }
 
         const result = await controller.addProduct(newContent)
+
+        // Si deseamos emitir algún evento de socket.io, primero necesitamos
+        // obtener el objeto que seteamos en app.js y luego hacer un emit()
+        const socketServer = req.app.get('socketServer')
+
         res.status(200).send({ status: 'OK', data: result })
     } catch (err) {
         res.status(500).send({ status: 'ERR', data: err.message })
