@@ -6,11 +6,14 @@ import {Server} from "socket.io"
 import { __dirname } from './utils.js'
 import viewsRouter from './routes/views.routes.js'
 import productsRouter from './routes/products.routes.js'
+import usersRouter from './routes/users.routes.js'
+import cartsRouter from './routes/carts.routes.js'
 
 const PORT = 5000
-// Atención!, puede haber problemas al utilizar localhost,
-// tratar siempre de armar la URL local con 127.0.0.1
-const MONGOOSE_URL = 'mongodb://127.0.0.1:27017/coder55605'
+// Atención!, puede haber problemas al utilizar localhost, tratar siempre de armar la URL local con 127.0.0.1
+// const MONGOOSE_URL = 'mongodb://127.0.0.1:27017/coder55605'
+// Comenzamos a utilizar servicio remoto de Atlas
+const MONGOOSE_URL = 'mongodb+srv://coder55605:coder2023@cluster0.4qaobt3.mongodb.net/coder55605'
 
 try {
     await mongoose.connect(MONGOOSE_URL)
@@ -52,9 +55,13 @@ try {
     // ver ejemplo en products.routes.js
     app.set('socketServer', socketServer)
 
+    // Habilitamos los endpoints de nuestra API
     app.use('/', viewsRouter)
     app.use('/api/products', productsRouter)
+    app.use('/api/users', usersRouter)
+    app.use('/api/carts', cartsRouter)
 
+    // No viene mal tener disponible un área para servir contenidos estáticos
     app.use('/static', express.static(`${__dirname}/public`))
 } catch(err) {
     console.log(`Backend: error al inicializar (${err.message})`)
