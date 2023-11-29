@@ -9,7 +9,7 @@ import productsRouter from './routes/products.routes.js'
 
 const PORT = 5000
 // Atención!, puede haber problemas al utilizar localhost,
-// tratar siempre de armar la URL local con 127.0.0.1
+// tratar siempre de armar la URI local con 127.0.0.1
 const MONGOOSE_URL = 'mongodb://127.0.0.1:27017/coder55605'
 
 try {
