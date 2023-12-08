@@ -1,0 +1,36 @@
+<h1>{{title}}</h1>
+
+<form action="/api/sessions/logout" method="get" style="margin-bottom: 24px;">
+    <button type="submit" class="btn btn-success">Salir</button>
+</form>
+
+{{!--
+Navegación opción 1
+--}}
+{{!-- <nav aria-label="Paginacion">
+    <ul class="pagination">
+        {{#if data.hasPrevPage}}<li class="page-item"><a class="page-link" href="/users?page={{data.prevPage}}">Ant</a></li>{{/if}}
+        {{#each data.pages}}
+            <li class="page-item"><a class="page-link" href="/users?page={{this}}">{{this}}</a></li>
+        {{/each}}
+        {{#if data.hasNextPage}}<li class="page-item"><a class="page-link" href="/users?page={{data.nextPage}}">Sig</a></li>{{/if}}
+    </ul>
+</nav> --}}
+
+{{!--
+Navegación opción 2
+--}}
+<nav aria-label="Paginacion">
+    <ul class="pagination">
+        {{#if data.hasPrevPage}}<li class="page-item"><a class="page-link" href="/users?page={{data.prevPage}}">Ant</a></li>{{/if}}
+        <li class="page-item"><a class="page-link" href="/users?page=1">Pg 1</a></li>
+        <li class="page-item"><a class="page-link" href="#">Pg {{data.page}} de {{data.totalPages}}</a></li>
+        {{#if data.hasNextPage}}<li class="page-item"><a class="page-link" href="/users?page={{data.nextPage}}">Sig</a></li>{{/if}}
+    </ul>
+</nav>
+
+<ul class="list-group">
+    {{#each data.docs}}
+        <li class="list-group-item">{{this.last_name}}</li>
+    {{/each}}
+</ul>
