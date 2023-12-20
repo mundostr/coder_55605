@@ -113,16 +113,7 @@ router.get('/failrestore', async (req, res) => {
 router.get('/github', passport.authenticate('githubAuth', { scope: ['user:email'] }), async (req, res) => {
 })
 
-router.get('/google', passport.authenticate('googleAuth', { scope: ['email'] }), async (req, res) => {
-})
-
 router.get('/githubcallback', passport.authenticate('githubAuth', { failureRedirect: '/login' }), async (req, res) => {
-    req.session.user = { username: req.user.email, admin: true }
-    // req.session.user = req.user
-    res.redirect('/profile')
-})
-
-router.get('/googlecallback', passport.authenticate('googleAuth', { failureRedirect: '/login' }), async (req, res) => {
     req.session.user = { username: req.user.email, admin: true }
     // req.session.user = req.user
     res.redirect('/profile')
