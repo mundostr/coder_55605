@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coder Login</title>
+</head>
+<body>
+    <h1>Coder Login mubj2517</h1>
+    
+    <form id="loginFrm" method="post">
+        <input type="email" name="email" id="email" required>
+        <br /><br />
+        <input type="password" name="pass" id="pass" required>
+        <br /><br />
+        <button type="submit">Ingresar</button>
+    </form>
+
+    <script>
+        const frm = document.getElementById('loginFrm');
+
+        frm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const data = new FormData(event.target);
+            const dataObject = Object.fromEntries(data.entries());
+
+            const response = await fetch('http://localhost:5000/api/sessions/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dataObject)
+            })
+
+            const jsonResponse = await response.json();
+            
+            if (jsonResponse.status === 'OK') {
+                window.location.replace(`http://localhost:5000/profilejwt`)
+                // window.location.replace(`http://localhost:5000/profilejwt?access_token=${jsonResponse.data.token}`)
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{{!--
+    Estos dos formularios son solo de prueba para verificar funcionamiento de cookies.
+    El primero nos permite generar una nueva cookie que almacene el usuario y mail indicados;
+    el segundo llama al endpoint que lista las cookies activas con este dominio.
+--}}
+<form action="/api/cookies" method="post" style="margin-top: 24px;">
+    <input type="text" name="user" class="form-control" placeholder="Usuario" style="width: 300px;"><br />
+    <input type="email" name="email" class="form-control" placeholder="Email" style="width: 300px;"><br />
+    <button type="submit" class="btn btn-success">Enviar</button>
+</form>
+
+<form action="/api/cookies/getcookies" style="margin-top: 24px;">
+    <button type="submit" class="btn btn-success">Ver cookie</button>
+</form>
