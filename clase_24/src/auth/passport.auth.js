@@ -16,6 +16,7 @@
 import passport from 'passport'
 import LocalStrategy from 'passport-local'
 import GithubStrategy from 'passport-github2'
+import GoogleStrategy from 'passport-google-oauth20'
 import jwt from 'passport-jwt'
 import userModel from '../models/user.model.js'
 import { createHash, isValidPassword } from '../utils.js'
@@ -90,7 +91,7 @@ const initPassport = () => {
         }
     }
 
-    const verifyGithub = async (accessToken, refreshToken, profile, done) => {
+    const verifyGithub = async (req, accessToken, refreshToken, profile, done) => {
         try {
             const user = await userModel.findOne({ email: profile._json.email })
 
@@ -108,10 +109,27 @@ const initPassport = () => {
     
                 return done(null, process)
             } else {
-                done(null, user)
+                return done(null, user)
             }
         } catch (err) {
             return done(`Error passport Github: ${err.message}`)
+        }
+    }
+
+    const verifyGoogle = async (req, accessToken, refreshToken, profile, done) => {
+        try {
+            // Simplemente tomamos datos del profile y generamos un user con nuestro formato.
+            // Deberíamos verificar y cargar un nuevo usuario en bbdd como en la estrategia de Github
+            const user = {
+                first_name: profile.name.familyName,
+                last_name: profile.name.givenName,
+                email: profile.emails[0].value,
+                role: 'user'
+            }
+
+            return done(null, user);
+        } catch (err) {
+            return done(`Error passport Google: ${err.message}`)
         }
     }
 
@@ -154,8 +172,17 @@ const initPassport = () => {
     passport.use('githubAuth', new GithubStrategy({
         clientID: 'Iv1.0c3c12fcc83c9770',
         clientSecret: 'ea4f406cbd6be3c160113f683ab29059a0a21072',
-        callbackURL: 'http://localhost:5000/api/sessions/githubcallback'
+        callbackURL: 'http://localhost:5000/api/auth/githubcallback',
+        passReqToCallback: true
     }, verifyGithub))
+
+    // Creamos estrategia para autenticación externa con Google
+    passport.use('googleAuth', new GoogleStrategy({
+        clientID: '522668187208-dc9cgk6mja7m0rd5vlfbas2pjdnknhnn.apps.googleusercontent.com',
+        clientSecret: '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',
+        callbackURL: 'http://localhost:5000/api/auth/googlecallback',
+        passReqToCallback: true
+    }, verifyGoogle))
 
     passport.use('jwtAuth', new jwt.Strategy({
         jwtFromRequest: jwt.ExtractJwt.fromExtractors([cookieExtractor]),
@@ -165,15 +192,11 @@ const initPassport = () => {
     // Métodos "helpers" de passport para manejo de datos de sesión
     // Son de uso interno de passport, normalmente no tendremos necesidad de tocarlos.
     passport.serializeUser((user, done) => {
-        done(null, user._id)
+        done(null, user);
     })
         
-    passport.deserializeUser(async (id, done) => {
-        try {
-            done(null, await userModel.findById(id))
-        } catch (err) {
-            done(err.message)
-        }
+    passport.deserializeUser((user, done) => {
+        done(null, user);
     })
 }
 

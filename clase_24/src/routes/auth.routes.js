@@ -76,6 +76,7 @@ router.get('/', async (req, res) => {
 
 router.get('/logout', async (req, res) => {
     try {
+        req.user = {};
         res.clearCookie('codertoken');
 
         // req.session.destroy nos permite destruir la sesión
@@ -125,10 +126,17 @@ router.get('/failrestore', async (req, res) => {
 router.get('/github', passport.authenticate('githubAuth', { scope: ['user:email'] }), async (req, res) => {
 })
 
+router.get('/google', passport.authenticate('googleAuth', { scope: ['email', 'profile'] }), async (req, res) => {
+})
+
 router.get('/githubcallback', passport.authenticate('githubAuth', { failureRedirect: '/login' }), async (req, res) => {
-    req.session.user = { username: req.user.email, admin: true }
-    // req.session.user = req.user
+    req.session.user = req.user
     res.redirect('/profile')
+})
+
+router.get('/googlecallback', passport.authenticate('googleAuth', { failureRedirect: '/login' }), async (req, res) => {
+    req.session.user = req.user;
+    res.redirect('/profile');
 })
 
 // Endpoint para testeo de autenticación jwt con passport
@@ -176,13 +184,13 @@ router.post('/login_manual_jwt', async (req, res) => {
     }
 })
 
-router.post('/login_passport_jwt', passport.authenticate('loginAuth', { failureRedirect: '/login', session: false }), async (req, res) => {
+router.post('/login_passport_jwt', passport.authenticate('loginAuth', { failureRedirect: '/login?msg=Usuario o clave no válidos', session: false }), async (req, res) => {
     const access_token = generateToken(req.user, '1h')
     res.cookie('codertoken', access_token, { maxAge: 60 * 60 * 1000, httpOnly: true })
     setTimeout(() => res.redirect('/profilejwt'), 200);
 })
 
-router.post('/register', passport.authenticate('registerAuth', { failureRedirect: '/api/auths/failregister' }), async (req, res) => {
+router.post('/register', passport.authenticate('registerAuth', { failureRedirect: '/api/auth/failregister' }), async (req, res) => {
     try {
         res.status(200).send({ status: 'OK', data: 'Usuario registrado' })
     } catch (err) {
@@ -190,7 +198,7 @@ router.post('/register', passport.authenticate('registerAuth', { failureRedirect
     }
 })
 
-router.post('/restore', passport.authenticate('restoreAuth', { failureRedirect: '/api/auths/failrestore' }), async (req, res) => {
+router.post('/restore', passport.authenticate('restoreAuth', { failureRedirect: '/api/auth/failrestore' }), async (req, res) => {
     try {
         res.status(200).send({ status: 'OK', data: 'Clave actualizada' })
     } catch (err) {

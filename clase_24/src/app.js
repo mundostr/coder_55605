@@ -84,7 +84,7 @@ try {
     app.use('/api/carts', cartsRouter)
     app.use('/api/orders', ordersRouter)
     app.use('/api/cookies', cookiesRouter)
-    app.use('/api/auths', authsRouter)
+    app.use('/api/auth', authsRouter)
     app.use('/api/pets', new PetsRouter().getRouter());
 
     app.use('/static', express.static(`${__dirname}/public`))

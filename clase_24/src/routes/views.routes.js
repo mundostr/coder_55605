@@ -61,7 +61,7 @@ router.get('/login', async (req, res) => {
     if (req.session.user) {
         res.redirect('/profile')
     } else {
-        res.render('login', {})
+        res.render('login', { msg: req.query.msg || null })
     }
 })
 
