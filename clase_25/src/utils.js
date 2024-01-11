@@ -12,7 +12,7 @@ export const createHash = password => bcrypt.hashSync(password, bcrypt.genSaltSy
 
 export const isValidPassword = (user, password) => bcrypt.compareSync(password, user.password)
 
-export const generateToken = (user, duration) => jwt.sign(user, config.SECRET_KEY, { expiresIn: duration })
+export const generateToken = (payload, duration) => jwt.sign(payload, config.SECRET_KEY, { expiresIn: duration })
 
 export const authToken = (req, res, next) => {
     const headerToken = req.headers.authorization ? req.headers.authorization.split(' ')[1]: undefined;
