@@ -60,11 +60,11 @@ try {
     })
     
     const socketServer = new Server(httpServer, {
-        cors: {
+        /* cors: {
             origin: "*",
             methods: ["PUT", "GET", "POST", "DELETE", "OPTIONS"],
             credentials: false
-        } 
+        }  */
     })
     
     socketServer.on('connection', socket => {
