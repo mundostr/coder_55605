@@ -1,0 +1,8 @@
+<h1>Perfil de usuario {{login_type}}</h1>
+
+<h2>Usuario: {{user.last_name}}, {{user.first_name}}</h2>
+<h3>Rol: {{user.role}}</h3>
+
+<form action="/api/auth/logout" method="get">
+    <button type="submit" class="btn btn-success">Salir</button>
+</form>
