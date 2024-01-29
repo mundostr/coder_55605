@@ -22,4 +22,13 @@ router.get('/paginated', async (req, res) => {
     }
 })
 
+router.get('/mock/:qty([1-9]*)', async (req, res) => {
+    try {
+        const users = await controller.generateMockUsers(req.params.qty);
+        res.status(200).send({ status: 'OK', data: users })
+    } catch (err) {
+        res.status(500).send({ status: 'ERR', data: err.message })
+    }
+});
+
 export default router
