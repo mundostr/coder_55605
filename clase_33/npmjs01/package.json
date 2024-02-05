@@ -1,0 +1,13 @@
+{
+  "name": "npmjs01",
+  "version": "1.0.2",
+  "description": "Primer proyecto para NPMjs.com",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "IDD",
+  "license": "MIT"
+}
