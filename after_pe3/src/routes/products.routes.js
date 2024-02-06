@@ -10,11 +10,11 @@ import { catcher } from '../utils.js';
 const router = Router();
 const controller = new ProductController();
 
-router.get("/", catcher(async (req, res) => {
+router.get("/", authToken, handlePolicies(['admin']), catcher(async (req, res) => {
     res.status(200).send({ status: "OK", data: await controller.getProducts() });
 }));
 
-router.get("/one/:pid", authToken, catcher(async (req, res) => {
+router.get("/one/:pid", authToken, handlePolicies(['admin']), catcher(async (req, res) => {
     res.status(200).send({ status: "OK", data: await controller.getProduct(req.params.pid) });
 }));
 
