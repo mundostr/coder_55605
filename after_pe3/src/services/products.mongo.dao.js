@@ -8,46 +8,25 @@ class ProductService {
     }
 
     async addProduct(product) {
-        try {
-            const process = await productModel.create(product);
-            return process === null ? 'No se pudo crear el producto' : 'Producto creado';
-        } catch (err) {
-            return err.message;
-        }
+        const process = await productModel.create(product);
+        return process === null ? 'No se pudo crear el producto' : 'Producto creado';
     }
 
     async getProducts() {
-        try {
-            return await productModel.find().lean();
-        } catch (err) {
-            return err.message;
-        }
-        
+        return await productModel.find().lean();
     }
 
     async getProduct(id) {
-        try {
-            const product = await productModel.findById(id);
-            return product === null ? 'No se encuentra el producto' : product;
-        } catch (err) {
-            return err.message;
-        }
+        const product = await productModel.findById(id);
+        return product === null ? 'No se encuentra el producto' : product;
     }
 
     async updateProduct(id, newContent) {
-        try {
-            return await productModel.findByIdAndUpdate(id, newContent);
-        } catch (err) {
-            return err.message;
-        }
+        return await productModel.findByIdAndUpdate(id, newContent);
     }
 
     async deleteProduct(id) {
-        try {
-            return await productModel.findByIdAndDelete(id);
-        } catch (err) {
-            return err.message;
-        }
+        return await productModel.findByIdAndDelete(id);
     }
 }
 

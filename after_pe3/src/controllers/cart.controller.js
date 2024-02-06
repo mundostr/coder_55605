@@ -7,34 +7,21 @@ export class CartController {
     }
 
     async getCarts() {
-        try {
-            return await service.getCarts();
-        } catch (err) {
-            return err.message
-        }
+        return await service.getCarts();
     }
 
     async getTopCart() {
-        try {
-            return await service.getTopCart();
-        } catch (err) {
-            return err.message
-        }
+        return await service.getTopCart();
     }
 
     async processPurchase(id) {
-        try {
-            const cartData = await service.getCartById(id);
-            return cartData;
-
-            // Recuperar datos de ese carrito, deberían tener también gracias al populate
-            // el stock actualizado de cada producto en el array products del carrito.
-            // Verificar stock producto x producto del array
-            // Generar ticket (2)
-            // Actualizar carrito
-            // Agendar actualizaciones de stock en colección productos
-        } catch (err) {
-            return err.message
-        }
+        const cartData = await service.getCartById(id);
+        return cartData;
+        // Recuperar datos de ese carrito, deberían tener también gracias al populate
+        // el stock actualizado de cada producto en el array products del carrito.
+        // Verificar stock producto x producto del array
+        // Generar ticket (2)
+        // Actualizar carrito
+        // Agendar actualizaciones de stock en colección productos
     }
 }

@@ -91,3 +91,9 @@ export const createHash = password => bcrypt.hashSync(password, bcrypt.genSaltSy
 export const isValidPassword = (user, password) => bcrypt.compareSync(password, user.password);
 
 export const generateToken = (payload, duration) => jwt.sign(payload, config.SECRET_KEY, { expiresIn: duration });
+
+export const catcher = (fn) => {
+    return (req, res, next) => {
+        fn(req, res).catch(err => next(err));
+    };
+}

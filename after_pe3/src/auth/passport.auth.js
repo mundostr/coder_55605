@@ -5,10 +5,10 @@ import GoogleStrategy from 'passport-google-oauth20';
 import jwt from 'passport-jwt';
 import userModel from '../models/user.model.js';
 import { createHash, isValidPassword } from '../utils.js';
-
-import config from '../config.js';
 import CustomError from '../services/error.custom.class.js';
 import errorsDictionary from '../services/error.dictionary.js';
+
+import config from '../config.js';
 
 export const passportCall = (strategy, options) => {
     return async (req, res, next) => {

@@ -9,33 +9,17 @@ class UserService {
     }
 
     async addUser(user) {
-        try {
-            const newUser = await userModel.create(user);
-            // En este caso utilizamos el diccionario de errores para retornar el mensaje, sin disparar un nuevo error
-            return newUser === null ? errorsDictionary.RECORD_CREATION_ERROR.message : errorsDictionary.RECORD_CREATION_OK.message;
-        } catch (err) {
-            return err.message;
-        }
+        const newUser = await userModel.create(user);
+        return newUser === null ? errorsDictionary.RECORD_CREATION_ERROR.message : errorsDictionary.RECORD_CREATION_OK.message;
     }
 
     async getUsers() {
-        try {
-            // password: 0 es para no retornar directamente el objeto sin el campo de clave
-            return await userModel.find({}, { password: 0 }).lean();
-        } catch (err) {
-            return err.message;
-        }
+        // password: 0 es para no retornar directamente el objeto sin el campo de clave
+        return await userModel.find({}, { password: 0 }).lean();
     }
 
     async getUsersPaginated(page, limit) {
-        try {
-            return await userModel.paginate(
-                {},
-                { offset: (page * 50) - 50, limit: limit, lean: true }
-            )
-        } catch (err) {
-            return err.message
-        }
+        return await userModel.paginate({}, { offset: (page * 50) - 50, limit: limit, lean: true })
     }
 }
 

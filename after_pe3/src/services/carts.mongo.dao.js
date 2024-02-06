@@ -8,27 +8,15 @@ class CartService {
     }
 
     async getCarts() {
-        try {
-            return await cartModel.find().lean();
-        } catch (err) {
-            return err.message
-        }
+        return await cartModel.find().lean();
     }
 
     async getCartById(id) {
-        try {
-            return await cartModel.findById(id);
-        } catch (err) {
-            return err.message
-        }
+        return await cartModel.findById(id);
     }
     
     async getTopCart() {
-        try {
-            return await cartModel.find().sort({ total: -1 }).limit(1).lean()
-        } catch (err) {
-            return err.message
-        }
+        return await cartModel.find().sort({ total: -1 }).limit(1).lean()
     }
 }
 

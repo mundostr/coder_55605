@@ -14,7 +14,7 @@ const authToken = (req, res, next) => {
         if (err) return res.status(403).send({ status: 'ERR', data: 'No autorizado' })
         req.user = credentials
         next()
-    })
+    });
 }
 
 export default authToken;

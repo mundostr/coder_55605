@@ -11,7 +11,9 @@ const errorsDictionary = {
     RECORD_CREATION_ERROR: { code: 500, message: 'Error al intentar crear el registro' },
     RECORD_CREATION_OK: { code: 200, message: 'Registro creado' },
     UPLOAD_FILE_ERROR: { code: 500, message: 'Error al subir el archivo al servidor'},
-    NO_AUTH_TOKEN: { code: 401, message: 'Este recurso requiere token de autenticación' }
+    NO_AUTH_TOKEN: { code: 401, message: 'Este recurso requiere token de autenticación' },
+    UNAUTHORIZED_USER: { code: 401, message: 'Usuario no autorizado' },
+    INSUFFICIENT_PERMISSIONS: { code: 403, message: 'Sin permisos suficientes' }
 }
 
 export default errorsDictionary;
