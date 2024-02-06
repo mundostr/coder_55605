@@ -10,7 +10,7 @@ import { catcher } from '../utils.js';
 const router = Router();
 const controller = new ProductController();
 
-router.get("/", authToken, catcher(async (req, res) => {
+router.get("/", catcher(async (req, res) => {
     res.status(200).send({ status: "OK", data: await controller.getProducts() });
 }));
 
@@ -37,6 +37,7 @@ router.delete("/:pid", authToken, handlePolicies(['admin']), catcher(async (req,
 
 router.param("pid", async (req, res, next, pid) => {
     const regex = new RegExp(/^[a-fA-F0-9]{24}$/);
+    
     if (regex.test(req.params.pid)) {
         next();
     } else {

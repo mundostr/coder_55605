@@ -14,43 +14,23 @@ export class ProductController {
     }
 
     async addProduct(product) {
-        try {
-            const normalizedProduct = new ProductDTO(product);
-            return await productService.addProduct(normalizedProduct);
-        } catch (err) {
-            return err.message
-        }
+        const normalizedProduct = new ProductDTO(product);
+        return await productService.addProduct(normalizedProduct);
     }
 
     async getProducts() {
-        try {
-            return await productService.getProducts();
-        } catch (err) {
-            return err.message
-        }
+        return await productService.getProducts();
     }
 
     async getProduct(id) {
-        try {
-            return await productService.getProduct(id);
-        } catch (err) {
-            return err.message
-        }
+        return await productService.getProduct(id);
     }
 
     async updateProduct(id, newContent) {
-        try {
-            return await productService.updateProduct(id, newContent);
-        } catch (err) {
-            return err.message
-        }
+        return await productService.updateProduct(id, newContent);
     }
 
     async deleteProduct(id) {
-        try {
-            return await productService.deleteProduct(id);
-        } catch (err) {
-            return err.message
-        }
+        return await productService.deleteProduct(id);
     }
 }
