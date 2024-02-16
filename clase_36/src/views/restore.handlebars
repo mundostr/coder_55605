@@ -1,0 +1,33 @@
+<style>
+    .restore-container {
+        max-width: 360px;
+        margin: auto;
+        margin-top: 64px;
+    }
+</style>
+
+
+<div class="restore-container">
+    <h1><b>CODERStore</b></h1>
+    <h2>Restore de clave</h2>
+    <p>Atención!, por el momento solo buscamos la coincidencia por email y actualizamos la contraseña</p>
+    <p>Esto lógicamente no es seguro en un ambiente de producción, luego agregaremos un paso de control para evitar que cualquiera pueda modificar la clave de cualquier cuenta, conociendo el email.</p>
+
+    <form action="/api/auth/restore" method="post" style="margin-top: 32px;">
+        <div class="input-group" style="width: 300px; margin-bottom: 32px;">
+            <span class="input-group-text" id="group1"><i class="fa-solid fa-user"></i></span>
+            <input type="email" name="email" class="form-control" placeholder="Email" required="required">
+        </div>
+
+        <div class="input-group" style="width: 300px; margin-bottom: 32px;">
+            <span class="input-group-text" id="group2"><i class="fa-solid fa-lock"></i></span>
+            <input type="password" name="pass" class="form-control" required="required">
+        </div>
+
+        <div style="margin-bottom: 32px;">
+            <a href="/login">Retornar al Login</a>
+        </div>
+
+        <button type="submit" class="btn btn-success">Restaurar</button>
+    </form>
+</div>

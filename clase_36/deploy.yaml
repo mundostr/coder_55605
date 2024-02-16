@@ -1,0 +1,52 @@
+# Este es nuetro primer archivo de config para realizar un deploy con Kubernetes,
+# utilizamos Minikube para levantar un cluster de prueba local y activando luego containers
+# basados en la imagen de prueba que subimos recientemente en nuestra cuenta de hub.docker.com
+
+# El archivo se organiza en 2 secciones:
+
+# Sección 1: deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coder55605-deploy
+spec:
+  # Cantidad de instancias (containers) para nuestro cluster
+  replicas: 3
+  selector:
+    matchLabels:
+      app: coder55605
+  template:
+    metadata:
+      labels:
+        app: coder55605
+    spec:
+      containers:
+        - name: coder55605
+          # imagen de origen a utilizar para los containers
+          image: mundostr/coder_55605_2:1.0.0
+          ports:
+            - containerPort: 3000
+          # Podemos configurar las variables de entorno necesarias
+          env:
+            - name: PORT
+              value: "3000"
+          # Always siempre trata de descargar la última versión disponible de la imagen cada vez que
+          # se deben lanzar un container, excepto que tenga en cache local una con el mismo digest
+          # Ver tags vs digest (https://kubernetes.io/docs/concepts/containers/images/)
+          imagePullPolicy: Always
+
+# Sección 2: servicio
+# Este es el servicio a través del cual podremos utilizar los recursos del cluster
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: coder55605-service
+spec:
+  selector:
+    app: coder55605
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: LoadBalancer
