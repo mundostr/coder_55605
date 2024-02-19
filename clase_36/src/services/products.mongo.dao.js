@@ -8,8 +8,7 @@ class ProductService {
     }
 
     async addProduct(product) {
-        const process = await productModel.create(product);
-        return process === null ? 'No se pudo crear el producto' : 'Producto creado';
+        return await productModel.create(product);
     }
 
     async getProducts() {
@@ -17,8 +16,7 @@ class ProductService {
     }
 
     async getProduct(id) {
-        const product = await productModel.findById(id);
-        return product === null ? 'No se encuentra el producto' : product;
+        return await productModel.findById(id);
     }
 
     async updateProduct(id, newContent) {

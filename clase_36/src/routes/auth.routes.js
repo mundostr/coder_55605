@@ -10,7 +10,7 @@ initPassportStrategies();
 
 const router = Router();
 
-router.get('/logout', catcher(async (req, res) => {
+router.get('/logout', authToken, catcher(async (req, res) => {
     res.clearCookie('codertoken');
     res.redirect('/login');
 }));
@@ -62,7 +62,7 @@ router.post('/register', passportCall('registerAuth', { failureRedirect: '/api/a
     res.status(200).send({ status: 'OK', data: 'Usuario registrado, por favor revise su casilla de correo.' });
 }));
 
-router.post('/restore', passportCall('restoreAuth', { failureRedirect: '/api/auth/failrestore' }), catcher(async (req, res) => {
+router.post('/restore', authToken, passportCall('restoreAuth', { failureRedirect: '/api/auth/failrestore' }), catcher(async (req, res) => {
     res.status(200).send({ status: 'OK', data: 'Clave actualizada' });
 }));
 

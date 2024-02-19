@@ -34,7 +34,7 @@ router.get('/register', async (req, res) => {
     res.render('register', {});
 })
 
-router.get('/restore', async (req, res) => {
+router.get('/restore', authToken, async (req, res) => {
     res.render('restore', {});
 })
 

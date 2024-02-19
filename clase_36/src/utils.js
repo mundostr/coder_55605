@@ -2,6 +2,8 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import { Vonage } from '@vonage/server-sdk';
+import CustomError from "./services/error.custom.class.js";
+import errorsDictionary from "./services/error.dictionary.js";
 
 import config from './config.js';
 
@@ -90,10 +92,20 @@ export const createHash = password => bcrypt.hashSync(password, bcrypt.genSaltSy
 
 export const isValidPassword = (user, password) => bcrypt.compareSync(password, user.password);
 
-export const generateToken = (payload, duration) => jwt.sign(payload, config.SECRET_KEY, { expiresIn: duration });
+export const generateToken = (payload, duration) => jwt.sign(payload, config.SECRET_KEY, { algorithm: 'HS256', expiresIn: duration });
 
 export const catcher = (fn) => {
     return (req, res, next) => {
         fn(req, res).catch(err => next(err));
     };
+}
+
+export const requiredFieldsInBody = (fields, moreInfo) => {
+    return async (req, res, next) => {
+        if (!fields.every(field => Object.keys(req.body).includes(field))) {
+            return next(new CustomError({ ...errorsDictionary.FEW_PARAMETERS, moreInfo: moreInfo }));
+        }
+
+        return next();
+    }
 }
