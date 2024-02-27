@@ -1,0 +1,10 @@
+/**
+ * Descripción general
+ *
+ * @param {tipo} nombre - descripción.
+ * @param {tipo} nombre - descripción.
+ * @returns {tipo} descripción.
+ * @throws {Error} descripción.
+ * @example
+ * // código con llamada de ejemplo
+ */
