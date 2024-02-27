@@ -13,6 +13,7 @@ const connection = mongoose.connect('mongodb://127.0.0.1:27017/coder55605');
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/pets', petsRouter);
 app.use('/api/users', usersRouter);
