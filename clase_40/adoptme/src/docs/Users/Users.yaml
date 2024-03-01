@@ -1,0 +1,134 @@
+# Bajo paths definimos las rutas
+# Recordar que en app.js para Users tenemos agregado el prefijo /api/users)
+paths:
+  /api/users:
+    # En cada una agregamos los métodos habilitados
+    # Este es el método get que no recibe parámetros para retornar todos los usuarios
+    get:
+      summary: 'Retorna todos los usuarios disponibles'
+      # Este título encabezará la lista
+      tags:
+        - Users
+      # Es importante agregar esta sección de códigos de respuesta
+      responses:
+        "200":
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  # Esta línea hace referencia al esquema de User (tomado desde el modelo de Mongoose)
+                  # Se puede ver el esquema indicado más abajo, en components
+                  $ref: '#/components/schemas/User'
+        "500":
+          description: 'ERROR general'
+
+  # Notar el uso de llaves para indicar el parámetro {uid}
+  /api/users/{uid}:
+    # Este es el método get que sí recibe parámetro para retornar un usuario específico
+    get:
+      summary: 'Retorna un usuario por id'
+      tags:
+        - ''
+      # Si el endpoint utiliza parámetros, debemos tener una sección parameters
+      # para indicar detalles (in: path equivale a un req.params)
+      parameters:
+        - name: uid
+          in: path
+          required: true
+      responses:
+        "200":
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/User'
+        "500":
+          description: 'ERROR general'
+
+    put:
+      summary: 'Actualiza un usuario por id'
+      tags:
+        - ''
+      parameters:
+        - name: uid
+          in: path
+          required: true
+      requestBody:
+        description: 'Datos obligatorios en el body'
+        required: true
+        content:
+          application/json:
+            schema:
+              # Esta referencia permite indicar la lista de campos que se deberían
+              # enviar en el body al contactar a este endpoint (ver requestBodies más abajo)
+              $ref: '#/components/requestBodies/updateUser'
+      responses:
+        "200":
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/User'
+        "500":
+          description: 'ERROR general'
+
+components:
+  schemas:
+    # Este esquema se coloca por separado, para poder referenciarlo en distintos
+    # endpoints arriba
+    User:
+      type: object
+      properties:
+        _id:
+          type: objectId
+          description: 'ID MongoDB'
+        first_name:
+          type: string
+          description: 'Nombre'
+        last_name:
+          type: string
+          description: 'Apellido'
+        email:
+          type: string
+          description: 'Email'
+        password:
+          type: string
+          description: 'Clave hasheada'
+        role:
+          type: string
+          description: 'Rol de usuario'
+        pets:
+          type: array
+          description: 'Ids de mascotas asociadas'
+      # Siempre es útil un ejemplo, también pueden colocarse ejemplos específicos por endpoint arriba
+      example:
+        _id: 638b8c323f3a4b3be6dc397e
+        first_name: Juan
+        last_name: Perez
+        email: jperez@gmail.com
+        password: $2a$12$G4KJiLZMsSZ.DXfxZryUWuS2Tr4ZrPwU0Z4T9pPT0B7P7E1C3EUPC,
+        role: 'user'
+        pets: []
+  
+  # Cuál es la diferencia entre schemas y requestBodies?
+  # schemas permite indicar esquemas completos, requestBodies indica los campos
+  # que debería adjuntar una determinada solicitud (en este caso updateUser)
+  requestBodies:
+    updateUser:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+          description: Clave TEXTO PLANO
