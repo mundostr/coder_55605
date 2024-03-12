@@ -1,0 +1,114 @@
+paths:
+  /api/users:
+    get:
+      summary: 'Retorna todos los usuarios disponibles'
+      tags:
+        - Users
+      responses:
+        "200":
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        "500":
+          description: 'ERROR general'
+
+  /api/users/{uid}:
+    get:
+      summary: 'Retorna un usuario por id'
+      tags:
+        - ''
+      parameters:
+        - name: uid
+          in: path
+          required: true
+      responses:
+        "200":
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/User'
+        "500":
+          description: 'ERROR general'
+
+    put:
+      summary: 'Actualiza un usuario por id'
+      tags:
+        - ''
+      parameters:
+        - name: uid
+          in: path
+          required: true
+      requestBody:
+        description: 'Datos obligatorios en el body'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/updateUser'
+      responses:
+        "200":
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/User'
+        "500":
+          description: 'ERROR general'
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: objectId
+          description: 'ID MongoDB'
+        first_name:
+          type: string
+          description: 'Nombre'
+        last_name:
+          type: string
+          description: 'Apellido'
+        email:
+          type: string
+          description: 'Email'
+        password:
+          type: string
+          description: 'Clave hasheada'
+        role:
+          type: string
+          description: 'Rol de usuario'
+        pets:
+          type: array
+          description: 'Ids de mascotas asociadas'
+      example:
+        _id: 638b8c323f3a4b3be6dc397e
+        first_name: Juan
+        last_name: Perez
+        email: jperez@gmail.com
+        password: $2a$12$G4KJiLZMsSZ.DXfxZryUWuS2Tr4ZrPwU0Z4T9pPT0B7P7E1C3EUPC,
+        role: 'user'
+        pets: []
+  
+  requestBodies:
+    updateUser:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+          description: Clave TEXTO PLANO
